@@ -3,6 +3,7 @@ twitterCredentials.py
 __pycache__/
 .git/info/exclude/
 .gitignore
+~/.gitignore
 
 *.spec
 
