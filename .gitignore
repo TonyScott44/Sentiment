@@ -1,7 +1,8 @@
 twitterCredentials.py
 .DS_Store
-__pycache__
-.git/info/exclude
+__pycache__/
+.git/info/exclude/
+.gitignore
 
 *.spec
 
