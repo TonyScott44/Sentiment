@@ -7,8 +7,8 @@ from textblob import TextBlob      # Python library with a simple interface to p
 
 import twitterCredentials          # Python file that contains Twitter credentials
 
-import matplotlib.pyplot as plt
-import numpy as np
+import matplotlib.pyplot as plt  # Used to visualize/plot data on graphs
+import numpy as np      # Python Library that adds support for large, multi-dimensional arrays and matrices, along with a large collection of high-level mathematical functions to operate on these arrays
 import pandas as pd
 import re
 import json
@@ -133,7 +133,7 @@ class TweetAnalyzer():
         df['source'] = np.array([tweet.source for tweet in tweets])
         df['likes'] = np.array([tweet.favorite_count for tweet in tweets])
         df['retweets'] = np.array([tweet.retweet_count for tweet in tweets])
-        #pd.set_option("display.max_rows", None, "display.max_columns", None)
+        pd.set_option("display.max_rows", None, "display.max_columns", None)
         return df
 
     def print_to_file(self,tweets_ext):
@@ -157,8 +157,8 @@ if __name__ == '__main__':
     #twitter_streamer.stream_tweets(fetched_tweets_filename, hash_tag_list)
 
     #tweets = api.user_timeline(screen_name="TwitterSafety", count=20)
-    tweets = api.search(q='twittersupport',lang='en',result_type='recent', count=30)
-    tweets_ext = api.search(q='twittersupport',lang='en',result_type='recent', tweet_mode='extended', count=30)
+    tweets = api.search(q='twittersupport',lang='en',result_type='popular', count=30)
+    tweets_ext = api.search(q='twittersupport',lang='en',result_type='popular', tweet_mode='extended', count=30)
     
     df = tweet_analyzer.tweets_to_data_frame(tweets)
     df['sentiment'] = np.array([tweet_analyzer.analyze_sentiment(tweet) for tweet in df['tweets']])
@@ -166,4 +166,26 @@ if __name__ == '__main__':
     
     #json_frame['sentiment'] = np.array([tweet_analyzer_ext.analyze_sentiment(tweet) for tweet in json_frame['tweets']])
     print(df.head(30))
+
+  # Time Series
+    #time_likes = pd.Series(data=df['len'].values, index=df['date'])
+    #time_likes.plot(figsize=(16, 4), color='r')
+    #plt.show()
+    
+    #time_favs = pd.Series(data=df['likes'].values, index=df['date'])
+    #time_favs.plot(figsize=(16, 4), color='r')
+    #plt.show()
+
+    #time_retweets = pd.Series(data=df['retweets'].values, index=df['date'])
+    #time_retweets.plot(figsize=(16, 4), color='r')
+    #plt.show()
+
+    # Layered Time Series:
+    #time_likes = pd.Series(data=df['likes'].values, index=df['date'])
+    #time_likes.plot(figsize=(16, 4), label="likes", legend=True)
+
+    time_retweets = pd.Series(data=df['retweets'].values, index=df['date'])
+    time_retweets.plot(figsize=(16, 4), label="retweets", legend=True)
+    plt.show()
+
 
